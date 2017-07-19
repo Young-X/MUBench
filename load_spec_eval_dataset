@@ -26,9 +26,28 @@ def get_rows_with_accepted_pull_requests_from(source):
 
     return accepted_rows
         
+def get_pull_request(url):
+    url = __to_api_pull_request_url(pull_request_url)
+
+    with urlopen(url) as r:
+        pull_request = r.read()
+
+    return pull_request
+
+def __to_api_pull_request_url(url):
+    # urls in the dataset look like this:
+    # https://github.com/cbeust/testng/pull/830
+    # to use the github API, we need this:
+    # https://api.github.com/repos/cbeust/testng/pulls/830
+
+    path = url[19:]
+    user, project, _, pull_request_id = path.split('/')
+
+    api_url = "https://api.github.com/repos/{}/{}/pulls/{}".format(user, project, pull_request_id)
+    return api_url
 
 source = read_csv(SOURCE_URL)
 accepted = get_rows_with_accepted_pull_requests_from(source)
 
-for row in accepted:
-    print(row) 
+row_number, specification, violation_id, pull_request_url, status = accepted[0]
+print(get_pull_request(pull_request_url))
