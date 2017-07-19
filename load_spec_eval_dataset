@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-import csv, os
+import csv, json, os
 from io import TextIOWrapper
-from os.path import join, dirname, abspath
+from os.path import join, dirname, abspath, exists
+from os import mkdir
 from urllib.request import urlopen
+from urllib.error import HTTPError
 
+MUBENCH_ROOT_PATH = dirname(abspath(__file__))
+DATA_PATH = join(MUBENCH_ROOT_PATH, 'data')
 SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
 
 def read_csv(url):
@@ -32,7 +36,7 @@ def get_pull_request(url):
     with urlopen(url) as r:
         pull_request = r.read()
 
-    return pull_request
+    return json.loads(pull_request.decode('utf-8'))
 
 def __to_api_pull_request_url(url):
     # urls in the dataset look like this:
@@ -46,8 +50,23 @@ def __to_api_pull_request_url(url):
     api_url = "https://api.github.com/repos/{}/{}/pulls/{}".format(user, project, pull_request_id)
     return api_url
 
+def create_project_dir(data_path, repo_info):
+    project_dir = join(data_path, repo_info["name"])
+    if not exists(project_dir):
+        mkdir(project_dir)
+    return project_dir
+
 source = read_csv(SOURCE_URL)
 accepted = get_rows_with_accepted_pull_requests_from(source)
 
-row_number, specification, violation_id, pull_request_url, status = accepted[0]
-print(get_pull_request(pull_request_url))
+for violation in accepted:
+    row_number, specification, violation_id, pull_request_url, status = violation
+
+    try:
+        pull_request = get_pull_request(pull_request_url)
+    except HTTPError:
+        print("Skipping {}: could not access pull request.".format(violation_id))
+        continue
+
+    repo_info = pull_request["base"]["repo"]
+    project_dir = create_project_dir(DATA_PATH, repo_info) 
