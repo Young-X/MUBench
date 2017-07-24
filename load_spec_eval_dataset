@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-import csv, json, os
+import csv, json, os, requests, sys
 from io import TextIOWrapper
 from os.path import join, dirname, abspath, exists
-from os import mkdir
+from os import mkdir, makedirs
 from urllib.request import urlopen
 from urllib.error import HTTPError
 
 MUBENCH_ROOT_PATH = dirname(abspath(__file__))
 DATA_PATH = join(MUBENCH_ROOT_PATH, 'data')
 SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
+LOCAL_PULL_REQUESTS = join(MUBENCH_ROOT_PATH, 'owolabi-pull-requests')
 
 def read_csv(url):
     stream = urlopen(url)
@@ -30,13 +31,25 @@ def get_rows_with_accepted_pull_requests_from(source):
 
     return accepted_rows
         
-def get_pull_request(url):
+
+def get_pull_request(url, user, token):
     url = __to_api_pull_request_url(pull_request_url)
 
-    with urlopen(url) as r:
-        pull_request = r.read()
+    local_pull_request = __get_local_pull_request_path(url)
+    if exists(local_pull_request):
+        with open(local_pull_request) as file_:
+            pull_request = json.load(file_)
+        return pull_request
+    else:
+        response = requests.get(url,
+                                auth=requests.auth.HTTPBasicAuth(
+                                    user, 
+                                    token))
+        pull_request = json.loads(response.text)
 
-    return json.loads(pull_request.decode('utf-8'))
+        save_locally(pull_request)
+        return pull_request
+
 
 def __to_api_pull_request_url(url):
     # urls in the dataset look like this:
@@ -50,6 +63,20 @@ def __to_api_pull_request_url(url):
     api_url = "https://api.github.com/repos/{}/{}/pulls/{}".format(user, project, pull_request_id)
     return api_url
 
+
+def __get_local_pull_request_path(url):
+    url_path = url.split("https://api.github.com/repos/", 1)[1]
+    return join(LOCAL_PULL_REQUESTS, url_path)
+
+
+def save_locally(pull_request):
+    file_path = __get_local_pull_request_path(pull_request["url"])
+    makedirs(dirname(file_path), exist_ok=True)
+
+    with open(file_path, 'w+') as file_:
+        json.dump(pull_request, file_)
+
+
 def create_project_dir(data_path, repo_info):
     project_dir = join(data_path, repo_info["name"])
     if not exists(project_dir):
@@ -59,11 +86,18 @@ def create_project_dir(data_path, repo_info):
 source = read_csv(SOURCE_URL)
 accepted = get_rows_with_accepted_pull_requests_from(source)
 
+_, user, token = sys.argv
+
 for violation in accepted:
     row_number, specification, violation_id, pull_request_url, status = violation
 
+    if not pull_request_url.startswith("https://github.com/"):
+        print("Skipping {}: unknown repository type.".format(pull_request_url))
+        continue
+
     try:
-        pull_request = get_pull_request(pull_request_url)
+        print("Loading pull request {}".format(pull_request_url))
+        pull_request = get_pull_request(pull_request_url, user, token)
     except HTTPError:
         print("Skipping {}: could not access pull request.".format(violation_id))
         continue
