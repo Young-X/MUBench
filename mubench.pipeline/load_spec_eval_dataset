@@ -140,7 +140,6 @@ def create_misuse(project_path, misuse_id, pull_request, specification):
             "description": pull_request["body"],
             "location": {"file": "TODO", "method": "TODO"},
             "internal": "false",
-            "pattern": "TODO",
             "report": pull_request["html_url"],
             "source": {"name": "Owolabi's Dataset ASE'16", "url": "fsl.cs.illinois.edu/spec-eval/"}
             }
