@@ -1,8 +1,0 @@
-build:
-  classes: target/classes/
-  commands:
-  - mvn compile
-  src: src/main/java/
-misuses:
-- '515'
-revision: TODO_v10

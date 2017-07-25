@@ -1,9 +1,0 @@
-build:
-  classes: target/classes/
-  commands:
-  - mvn compile
-  src: src/main/java/
-misuses:
-- '390'
-- '389'
-revision: f43842538579aab345e6aadda9d081da615900d3

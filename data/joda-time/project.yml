@@ -1,5 +1,0 @@
-name: joda-time
-repository:
-  type: git
-  url: https://github.com/JodaOrg/joda-time.git
-url: http://www.joda.org/joda-time/
