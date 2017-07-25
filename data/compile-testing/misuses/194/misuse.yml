@@ -1,0 +1,19 @@
+api:
+- java.lang.Long
+characteristics:
+- TODO
+crash: TODO
+description: "`RtcpReceivedEvent.java` calls `java.lang.long.parseLong` without first\
+  \ checking whether the argument parses. This lead to an uncaught `NumberFormatException`:\
+  \ [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).\n\
+  \nThis pull request adds a check with a  more helpful exception message. Kindly\
+  \ let me know if you want me to change the message. \n"
+internal: 'false'
+location:
+  file: TODO
+  method: TODO
+pattern: TODO
+report: https://github.com/asterisk-java/asterisk-java/pull/132
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/

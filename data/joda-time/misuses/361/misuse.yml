@@ -1,0 +1,20 @@
+api:
+- java.util.Enumeration
+characteristics:
+- TODO
+crash: TODO
+description: "The Rule constructor in org.joda.time.tz.ZoneInfoCompiler.java does\
+  \ not\ncheck the number of elements in the StringTokenier obtained from parsing\n\
+  the timezone file.  There is an assumption that the input TimeZone file\nwill always\
+  \ be valid, leading to runtime exceptions with no good error\nmessage when the file\
+  \ is invalid. This pull request adds a potential fix\nand a test for this issue.\
+  \ \n"
+internal: 'false'
+location:
+  file: TODO
+  method: TODO
+pattern: TODO
+report: https://github.com/JodaOrg/joda-time/pull/319
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/

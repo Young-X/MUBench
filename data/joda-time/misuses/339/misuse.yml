@@ -1,0 +1,25 @@
+api:
+- java.io.ByteArrayOutputStream
+characteristics:
+- TODO
+crash: TODO
+description: "When a DataOutputStream instance is created, it is a good practice to\
+  \ call flush/close explicitly after finish writing to the stream as mentioned for\
+  \ example [here](http://stackoverflow.com/questions/2984538/how-to-use-bytearrayoutputstream-and-dataoutputstream-simultaneously-java).\
+  \ \nMoreover, other places in this project, a close/flush is called on DataOutputStream\
+  \ instance after finish writing to stream for example [here](https://github.com/JodaOrg/joda-time/blob/aaf4396ceb75f39aaa4083f3c96aabc822deeb9e/src/main/java/org/joda/time/tz/ZoneInfoCompiler.java#L453).\n\
+  In the test [TestBuilder.java](https://github.com/JodaOrg/joda-time/blob/5846d0569dcf64cdfd024f6bf58d707f1a679f64/src/test/java/org/joda/time/tz/TestBuilder.java#L291),\
+  \ a DataOutputStream instance wraps an underlying ByteArrayOutputStream instance\
+  \ and invokes the underlying instances's toByteArray() without calling recommended\
+  \ close/flush method.\nThis pull request adds a flush method at appropriate place\
+  \ and also fix the issue with the test  TestBuilder.java as mentioned above. This\
+  \ PR is similar to my earlier accepted [PR](https://github.com/JodaOrg/joda-time/pull/339)\n"
+internal: 'false'
+location:
+  file: TODO
+  method: TODO
+pattern: TODO
+report: https://github.com/JodaOrg/joda-time/pull/343
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/
