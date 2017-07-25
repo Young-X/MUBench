@@ -81,12 +81,10 @@ def save_locally(pull_request):
         json.dump(pull_request, file_)
 
 
-def create_project_dir(data_path, repository):
+def create_project(data_path, repository):
     project_dir = join(data_path, repository["name"].lower())
     makedirs(project_dir, exist_ok=True)
-    return project_dir
-
-def create_project_yml(project_dir, repository):
+    
     content = {
             "name": repository["name"], 
             "repository": {"type": "git", "url": repository["html_url"]},
@@ -120,5 +118,4 @@ for violation in accepted:
         continue
 
     repository = pull_request["base"]["repo"]
-    project_dir = create_project_dir(DATA_PATH, repository) 
-    create_project_yml(project_dir, repository)
+    create_project(DATA_PATH, repository)
