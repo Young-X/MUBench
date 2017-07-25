@@ -94,6 +94,50 @@ def create_project(data_path, repository):
     project_yml_path = join(project_dir, "project.yml")
     write_yaml(content, project_yml_path)
 
+    return project_dir
+
+
+def create_misuse(project_path, pull_request, violation_id, specification):
+    misuse_dir = join(project_path, "misuses", violation_id)
+    makedirs(misuse_dir, exist_ok=True)
+
+    content = {
+            "api": __get_api(specification),
+            "characteristics": ["TODO"],
+            "crash": "TODO",
+            "description": pull_request["body"],
+            "location": {"file": "TODO", "method": "TODO"},
+            "internal": "false",
+            "pattern": "TODO",
+            "report": pull_request["html_url"],
+            "source": {"name": "Owolabi's Dataset ASE'16", "url": "fsl.cs.illinois.edu/spec-eval/"}
+            }
+
+    misuse_yml_path = join(misuse_dir, "misuse.yml")
+    write_yaml(content, misuse_yml_path)
+    
+
+def __get_api(specification):
+    mapping = {
+            "Collections_SynchronizedCollection": ["java.util.Collections.synchronizedList"],
+            "Collections_SynchronizedMap": ["java.util.Collections.synchronizedMap"],
+            "Iterator_HasNext": ["java.util.Iterator"],
+            "StringTokenizer_HasMoreElements": ["java.util.Enumeration"],
+            "Token_HasMoreElements": ["java.util.Enumeration"],
+            "URLDecoder_DecodeUTF8": ["java.net.URLDecoder"],
+            "ByteArrayOutputStream_FlushBeforeRetrieve": ["java.io.ByteArrayOutputStream"],
+            "Math_ContendedRandom": ["java.lang.Math"],
+            "InetSocketAddress_Port": ["java.net.InetSocketAddress"],
+            "Long_BadParsingArgs": ["java.lang.Long"],
+            "Byte_BadParsingArgs": ["java.lang.Byte"],
+            "Short_BadParsingArgs": ["java.lang.Short"]
+            }
+
+    if specification in mapping:
+        return mapping[specification]
+    else:
+        return ["TODO {}".format(specification)]
+
 
 source = read_csv(SOURCE_URL)
 accepted = get_rows_with_accepted_pull_requests_from(source)
@@ -118,4 +162,5 @@ for violation in accepted:
         continue
 
     repository = pull_request["base"]["repo"]
-    create_project(DATA_PATH, repository)
+    project_path = create_project(DATA_PATH, repository)
+    create_misuse(project_path, pull_request, violation_id, specification)
