@@ -9,7 +9,8 @@ from utils.io import write_yaml
 
 MUBENCH_ROOT_PATH = join(dirname(abspath(__file__)), os.pardir)
 DATA_PATH = join(MUBENCH_ROOT_PATH, 'data')
-SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
+REPORTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
+SUBJECTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/subjects.csv"
 LOCAL_PULL_REQUESTS = join(MUBENCH_ROOT_PATH, 'owolabi-pull-requests')
 
 def read_csv(url):
@@ -17,20 +18,20 @@ def read_csv(url):
     reader = csv.reader(TextIOWrapper(stream))
     return list(reader)
 
-def get_rows_with_accepted_pull_requests_from(source):
-    accepted_rows = []
+def get_accepted_reports(reports):
+    accepted_reports = []
 
-    for row in source:
-        _, _, _, _, status = row
+    for report in reports:
+        status = report[4]
 
         if status in ['Accepted']:
-            accepted_rows.append(row)
+            accepted_reports.append(report)
         elif status in ['Rejected', 'Pending ', 'Already fixed']:
             pass
         else:
             raise ValueError("Unknown status: {}".format(status))
 
-    return accepted_rows
+    return accepted_reports
         
 
 def get_pull_request(url, user, token):
@@ -87,7 +88,7 @@ def create_project(data_path, repository):
     
     content = {
             "name": repository["name"], 
-            "repository": {"type": "git", "url": repository["html_url"]},
+            "repository": {"type": "git", "url": repository["clone_url"]},
             "url": repository["homepage"] or repository["html_url"]
             }
 
@@ -139,17 +140,15 @@ def __get_api(specification):
         return ["TODO {}".format(specification)]
 
 
-source = read_csv(SOURCE_URL)
-accepted = get_rows_with_accepted_pull_requests_from(source)
-
 if len(sys.argv) == 3:
     _, user, token = sys.argv
 else:
     user, token = (None, None)
     print("No user/token given; continuing with local sources only.")
 
-for violation in accepted:
-    row_number, specification, violation_id, pull_request_url, status = violation
+reports = read_csv(REPORTS_SOURCE_URL)
+for report in get_accepted_reports(reports):
+    row_number, specification, violation_id, pull_request_url, status = report
 
     if not pull_request_url.startswith("https://github.com/"):
         print("Unknown repository type of {}".format(pull_request_url))
