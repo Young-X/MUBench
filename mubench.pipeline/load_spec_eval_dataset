@@ -5,7 +5,7 @@ from os.path import join, dirname, abspath, exists
 from os import mkdir, makedirs
 from urllib.request import urlopen
 from urllib.error import HTTPError
-from utils.io import write_yaml
+from utils.io import write_yaml, read_yaml
 
 MUBENCH_ROOT_PATH = join(dirname(abspath(__file__)), os.pardir)
 DATA_PATH = join(MUBENCH_ROOT_PATH, 'data')
@@ -13,6 +13,7 @@ REPORTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
 SUBJECTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/subjects.csv"
 MANUAL_INSPECTIONS_URL = "http://fsl.cs.illinois.edu/spec-eval/inspections.csv"
 LOCAL_PULL_REQUESTS = join(MUBENCH_ROOT_PATH, 'owolabi-pull-requests')
+DATASETS_FILE = join(DATA_PATH, 'datasets.yml')
 
 def read_csv(url):
     stream = urlopen(url)
@@ -188,7 +189,10 @@ def create_version(project_path, version_sha, misuses):
     write_yaml(content, version_yml_path)
     
 
-
+def add_dataset(dataset, datasets_yml_path):
+    datasets = read_yaml(datasets_yml_path)
+    datasets['owolabi-ase16'] = dataset
+    write_yaml(datasets, datasets_yml_path)
 
 
 if len(sys.argv) == 3:
@@ -204,7 +208,6 @@ manual_inspections = read_csv(MANUAL_INSPECTIONS_URL)
 versions_per_project = {}
 misuses_per_version = {}
 
-number_of_created_misuses = 0
 stub_version_index = 0
 
 for report in get_accepted_reports(reports):
@@ -247,7 +250,7 @@ for report in get_accepted_reports(reports):
     create_misuse(project_path, misuse, pull_request, specification)
     misuses_per_version[version].add(misuse) 
 
-    number_of_created_misuses += 1
+dataset = set()
 
 for project, versions in versions_per_project.items():
     for version in versions:
@@ -256,5 +259,9 @@ for project, versions in versions_per_project.items():
 
         create_version(project_path, version, list(misuses)) 
 
+        for misuse in misuses:
+            dataset.add("{}.{}".format(project, misuse))
 
-print("Generated {} misuses.".format(number_of_created_misuses))
+add_dataset(list(dataset), DATASETS_FILE)
+
+print("Generated {} misuses.".format(len(dataset)))
