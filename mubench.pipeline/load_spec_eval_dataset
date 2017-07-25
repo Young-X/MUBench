@@ -32,7 +32,22 @@ def get_accepted_reports(reports):
             raise ValueError("Unknown status: {}".format(status))
 
     return accepted_reports
+
+
+def get_evaluated_subject(report_url, subjects):
+    for subject in subjects:
+        _, _, subject_url, commit_sha = subject
         
+        # example report_path:  https://github.com/Thomas-S-B/visualee/pull/4 
+        # example subject_path: https://github.com/Thomas-S-B/visualee.git
+        report_path = report_url.split("/pull/", 1)[0]
+        subject_path = subject_url[:-4]
+
+        if report_path == subject_path:
+            return subject
+
+    return None
+
 
 def get_pull_request(url, user, token):
     url = __to_api_pull_request_url(pull_request_url)
@@ -82,8 +97,8 @@ def save_locally(pull_request):
         json.dump(pull_request, file_)
 
 
-def create_project(data_path, repository):
-    project_dir = join(data_path, repository["name"].lower())
+def create_project(data_path, project_id, repository):
+    project_dir = join(data_path, project_id)
     makedirs(project_dir, exist_ok=True)
     
     content = {
@@ -98,8 +113,8 @@ def create_project(data_path, repository):
     return project_dir
 
 
-def create_misuse(project_path, pull_request, violation_id, specification):
-    misuse_dir = join(project_path, "misuses", violation_id)
+def create_misuse(project_path, misuse_id, pull_request, specification):
+    misuse_dir = join(project_path, "misuses", misuse_id)
     makedirs(misuse_dir, exist_ok=True)
 
     content = {
@@ -116,6 +131,8 @@ def create_misuse(project_path, pull_request, violation_id, specification):
 
     misuse_yml_path = join(misuse_dir, "misuse.yml")
     write_yaml(content, misuse_yml_path)
+
+    return violation_id
     
 
 def __get_api(specification):
@@ -147,8 +164,12 @@ else:
     print("No user/token given; continuing with local sources only.")
 
 reports = read_csv(REPORTS_SOURCE_URL)
+subjects = read_csv(SUBJECTS_SOURCE_URL)
+
+misuses_per_version = {}
+
 for report in get_accepted_reports(reports):
-    row_number, specification, violation_id, pull_request_url, status = report
+    row_number, specification, misuse, pull_request_url, status = report
 
     if not pull_request_url.startswith("https://github.com/"):
         print("Unknown repository type of {}".format(pull_request_url))
@@ -160,6 +181,19 @@ for report in get_accepted_reports(reports):
         print("No pull request information available for {}".format(violation_id))
         continue
 
+    subject = get_evaluated_subject(pull_request_url, subjects)
+    if not subject:
+        print("No matching subject found for {}".format(violation_id))
+        continue
+
+    version = subject[3]
+    project = subject[1].replace('.', '-').lower()
+
+    if version not in misuses_per_version:
+        misuses_per_version[version] = set()
+
     repository = pull_request["base"]["repo"]
-    project_path = create_project(DATA_PATH, repository)
-    create_misuse(project_path, pull_request, violation_id, specification)
+    project_path = create_project(DATA_PATH, project, repository)
+
+    create_misuse(project_path, misuse, pull_request, specification)
+    misuses_per_version[version].add(misuse) 
