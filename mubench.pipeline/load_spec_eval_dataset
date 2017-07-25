@@ -172,7 +172,8 @@ def __get_api(specification):
 
 
 def create_version(project_path, version_sha, misuses):
-    version_dir = join(project_path, "versions", version_sha[:7])
+    version_subfolder = version_sha[:7] if "TODO" not in version_sha else version_sha
+    version_dir = join(project_path, "versions", version_subfolder)
     makedirs(version_dir, exist_ok=True)
 
     content = {
