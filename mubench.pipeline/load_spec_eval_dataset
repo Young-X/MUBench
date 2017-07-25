@@ -11,6 +11,7 @@ MUBENCH_ROOT_PATH = join(dirname(abspath(__file__)), os.pardir)
 DATA_PATH = join(MUBENCH_ROOT_PATH, 'data')
 REPORTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/bugreports.csv"
 SUBJECTS_SOURCE_URL = "http://fsl.cs.illinois.edu/spec-eval/subjects.csv"
+MANUAL_INSPECTIONS_URL = "http://fsl.cs.illinois.edu/spec-eval/inspections.csv"
 LOCAL_PULL_REQUESTS = join(MUBENCH_ROOT_PATH, 'owolabi-pull-requests')
 
 def read_csv(url):
@@ -45,6 +46,16 @@ def get_evaluated_subject(report_url, subjects):
 
         if report_path == subject_path:
             return subject
+
+    return None
+
+
+def get_manual_inspection(violation_id, manual_inspections):
+    for manual_inspection in manual_inspections:
+        # example: manual_inspection[1] = A_192
+        manual_inspection_violation_id = manual_inspection[1].split('_', 1)[1]
+        if violation_id == manual_inspection_violation_id:
+            return manual_inspection
 
     return None
 
@@ -97,6 +108,10 @@ def save_locally(pull_request):
         json.dump(pull_request, file_)
 
 
+def get_project_name(source_project_name):
+    return source_project_name.replace('.', '-').lower()
+
+
 def create_project(data_path, project_id, repository):
     project_dir = join(data_path, project_id)
     makedirs(project_dir, exist_ok=True)
@@ -131,8 +146,6 @@ def create_misuse(project_path, misuse_id, pull_request, specification):
 
     misuse_yml_path = join(misuse_dir, "misuse.yml")
     write_yaml(content, misuse_yml_path)
-
-    return violation_id
     
 
 def __get_api(specification):
@@ -157,6 +170,27 @@ def __get_api(specification):
         return ["TODO {}".format(specification)]
 
 
+def create_version(project_path, version_sha, misuses):
+    version_dir = join(project_path, "versions", version_sha[:7])
+    makedirs(version_dir, exist_ok=True)
+
+    content = {
+            "build": {
+                "classes": "target/classes/",
+                "commands": ["mvn compile"],
+                "src": "src/main/java/"
+                },
+            "misuses": misuses,
+            "revision": version_sha
+            }
+
+    version_yml_path = join(version_dir, "version.yml")
+    write_yaml(content, version_yml_path)
+    
+
+
+
+
 if len(sys.argv) == 3:
     _, user, token = sys.argv
 else:
@@ -165,8 +199,13 @@ else:
 
 reports = read_csv(REPORTS_SOURCE_URL)
 subjects = read_csv(SUBJECTS_SOURCE_URL)
+manual_inspections = read_csv(MANUAL_INSPECTIONS_URL)
 
+versions_per_project = {}
 misuses_per_version = {}
+
+number_of_created_misuses = 0
+stub_version_index = 0
 
 for report in get_accepted_reports(reports):
     row_number, specification, misuse, pull_request_url, status = report
@@ -178,22 +217,44 @@ for report in get_accepted_reports(reports):
     try:
         pull_request = get_pull_request(pull_request_url, user, token)
     except HTTPError:
-        print("No pull request information available for {}".format(violation_id))
+        print("No pull request information available for {}".format(misuse))
         continue
 
     subject = get_evaluated_subject(pull_request_url, subjects)
-    if not subject:
-        print("No matching subject found for {}".format(violation_id))
-        continue
-
-    version = subject[3]
-    project = subject[1].replace('.', '-').lower()
+    if subject:
+        version = subject[3]
+        project = get_project_name(subject[1])
+    else:
+        manual_inspection = get_manual_inspection(misuse, manual_inspections)
+        if manual_inspection:
+            version = "TODO_v{}".format(stub_version_index)
+            stub_version_index += 1
+            project = get_project_name(manual_inspection[2])
+        else:
+            print("Could not find matching subject or manual inspection for {}".format(misuse))
+            continue
 
     if version not in misuses_per_version:
         misuses_per_version[version] = set()
+
+    if project not in versions_per_project:
+        versions_per_project[project] = set()
+    versions_per_project[project].add(version)
 
     repository = pull_request["base"]["repo"]
     project_path = create_project(DATA_PATH, project, repository)
 
     create_misuse(project_path, misuse, pull_request, specification)
     misuses_per_version[version].add(misuse) 
+
+    number_of_created_misuses += 1
+
+for project, versions in versions_per_project.items():
+    for version in versions:
+        project_path = join(DATA_PATH, project)
+        misuses = misuses_per_version[version]
+
+        create_version(project_path, version, list(misuses)) 
+
+
+print("Generated {} misuses.".format(number_of_created_misuses))
