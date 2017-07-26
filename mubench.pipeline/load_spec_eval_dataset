@@ -248,6 +248,8 @@ for report in get_accepted_reports(reports):
         else:
             print("Unknown source files directory for {}; fix matching version.yml!".format(misuse))
 
+        file_with_misuse = file_with_misuse.rsplit(':', 1)[0]
+
     if version not in misuses_per_version:
         misuses_per_version[version] = set()
 
