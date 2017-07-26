@@ -154,8 +154,8 @@ def create_misuse(project_path, misuse_id, pull_request, specification, location
 
 def __get_api(specification):
     mapping = {
-            "Collections_SynchronizedCollection": ["java.util.Collections.synchronizedList"],
-            "Collections_SynchronizedMap": ["java.util.Collections.synchronizedMap"],
+            "Collections_SynchronizedCollection": ["java.util.List"],
+            "Collections_SynchronizedMap": ["java.util.Map"],
             "Iterator_HasNext": ["java.util.Iterator"],
             "StringTokenizer_HasMoreElements": ["java.util.Enumeration"],
             "Token_HasMoreElements": ["java.util.Enumeration"],
@@ -171,7 +171,7 @@ def __get_api(specification):
     if specification in mapping:
         return mapping[specification]
     else:
-        return ["TODO {}".format(specification)]
+        return ["TODO.{}".format(specification)]
 
 
 def create_version(project_path, version_sha, misuses):
