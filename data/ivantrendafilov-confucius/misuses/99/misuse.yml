@@ -1,0 +1,19 @@
+api:
+- java.lang.Short
+characteristics:
+- TODO
+crash: TODO
+description: |
+  `AbstractConfiguration.java` calls `java.lang.long.parseLong` without first checking whether the argument parses. This lead to an uncaught `NumberFormatException`: [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).
+
+  This pull request adds a check with a  more helpful exception message and tests for this issue.
+
+  This needs to be done for `java.lang.Short.parseShort` and `java.lang.Byte.parseByte` also. Kindly let me know if you want me to do same for them.
+internal: 'false'
+location:
+  file: org/trendafilov/confucius/core/AbstractConfiguration.java
+  method: TODO
+report: https://github.com/IvanTrendafilov/Confucius/pull/6
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/

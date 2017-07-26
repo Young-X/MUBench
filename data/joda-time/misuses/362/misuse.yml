@@ -1,0 +1,16 @@
+api:
+- java.util.Enumeration
+characteristics:
+- TODO
+crash: TODO
+description: |
+  In org.joda.time.tz.ZoneInfoCompiler.java, the number of elements in the StringTokenier obtained from parsing the timezone file is not checked. There is an assumption that the input TimeZone file
+  will always be valid, leading to runtime exceptions with no good error message when the file is invalid. This pull request adds a potential fix and a test for this issue.
+internal: 'false'
+location:
+  file: org/joda/time/tz/ZoneInfoCompiler.java
+  method: TODO
+report: https://github.com/JodaOrg/joda-time/pull/333
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/

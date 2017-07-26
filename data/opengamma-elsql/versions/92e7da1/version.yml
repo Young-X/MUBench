@@ -1,0 +1,15 @@
+build:
+  classes: target/classes/
+  commands:
+  - mvn compile
+  src: src/main/java/
+misuses:
+- '17'
+- '18'
+- '86'
+- '501'
+- '515'
+- '502'
+- '85'
+- '514'
+revision: 92e7da1eb0ed8dd1eadfc448f8ed2941fc1ef9fc^1
