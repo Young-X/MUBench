@@ -70,13 +70,17 @@ def get_pull_request(url, user, token):
             pull_request = json.load(file_)
         return pull_request
     else:
-        if not (user and token):
-            raise HTTPError("")
+        try:
+            if user and token:
+                response = requests.get(url,
+                                        auth=requests.auth.HTTPBasicAuth(
+                                            user, 
+                                            token))
+            else: 
+                response = requests.get(url)
+        except HTTPError:
+            return None
 
-        response = requests.get(url,
-                                auth=requests.auth.HTTPBasicAuth(
-                                    user, 
-                                    token))
         pull_request = json.loads(response.text)
 
         save_locally(pull_request)
@@ -199,7 +203,7 @@ if len(sys.argv) == 3:
     _, user, token = sys.argv
 else:
     user, token = (None, None)
-    print("No user/token given; continuing with local sources only.")
+    print("No user/token given; continuing without authentication.")
 
 reports = read_csv(REPORTS_SOURCE_URL)
 subjects = read_csv(SUBJECTS_SOURCE_URL)
@@ -215,9 +219,8 @@ for report in get_accepted_reports(reports):
         print("Unknown repository type of {}".format(pull_request_url))
         continue
 
-    try:
-        pull_request = get_pull_request(pull_request_url, user, token)
-    except HTTPError:
+    pull_request = get_pull_request(pull_request_url, user, token)
+    if not pull_request:
         print("No pull request information available for {}".format(misuse))
         continue
 
