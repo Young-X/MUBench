@@ -244,7 +244,7 @@ for report in get_accepted_reports(reports):
         file_with_misuse = manual_inspection[3]
         
         if file_with_misuse.startswith("./src/main/java/"):
-            file_with_misuse = file_with_misuse[:16]
+            file_with_misuse = file_with_misuse[16:]
         else:
             print("Unknown source files directory for {}; fix matching version.yml!".format(misuse))
 
