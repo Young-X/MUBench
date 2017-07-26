@@ -133,7 +133,7 @@ def create_project(data_path, project_id, repository):
     return project_dir
 
 
-def create_misuse(project_path, misuse_id, pull_request, specification):
+def create_misuse(project_path, misuse_id, pull_request, specification, location_file):
     misuse_dir = join(project_path, "misuses", misuse_id)
     makedirs(misuse_dir, exist_ok=True)
 
@@ -142,7 +142,7 @@ def create_misuse(project_path, misuse_id, pull_request, specification):
             "characteristics": ["TODO"],
             "crash": "TODO",
             "description": pull_request["body"],
-            "location": {"file": "TODO", "method": "TODO"},
+            "location": {"file": location_file or "TODO", "method": "TODO"},
             "internal": "false",
             "report": pull_request["html_url"],
             "source": {"name": "Owolabi's Dataset ASE'16", "url": "fsl.cs.illinois.edu/spec-eval/"}
@@ -225,17 +225,28 @@ for report in get_accepted_reports(reports):
         continue
 
     subject = get_evaluated_subject(pull_request_url, subjects)
+    manual_inspection = get_manual_inspection(misuse, manual_inspections)
+    if not (subject or manual_inspection):
+        print("Could not find matching subject or manual inspection for {}".format(misuse))
+        continue
+
     if subject:
         version = subject[3]
         project = get_project_name(subject[1])
     else:
-        manual_inspection = get_manual_inspection(misuse, manual_inspections)
         if manual_inspection:
             version = "{}^1".format(pull_request["head"]["sha"])
             project = get_project_name(manual_inspection[2])
+
+    file_with_misuse = None
+    if manual_inspection:
+        # example: ./src/main/java/com/google/common/collect/SingletonImmutableSet.java:99
+        file_with_misuse = manual_inspection[3]
+        
+        if file_with_misuse.startswith("./src/main/java/"):
+            file_with_misuse = file_with_misuse[:16]
         else:
-            print("Could not find matching subject or manual inspection for {}".format(misuse))
-            continue
+            print("Unknown source files directory for {}; fix matching version.yml!".format(misuse))
 
     if version not in misuses_per_version:
         misuses_per_version[version] = set()
@@ -247,7 +258,7 @@ for report in get_accepted_reports(reports):
     repository = pull_request["base"]["repo"]
     project_path = create_project(DATA_PATH, project, repository)
 
-    create_misuse(project_path, misuse, pull_request, specification)
+    create_misuse(project_path, misuse, pull_request, specification, file_with_misuse)
     misuses_per_version[version].add(misuse) 
 
 dataset = set()
