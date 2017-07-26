@@ -171,7 +171,7 @@ def __get_api(specification):
 
 
 def create_version(project_path, version_sha, misuses):
-    version_subfolder = version_sha[:7] if "TODO" not in version_sha else version_sha
+    version_subfolder = version_sha[:7]
     version_dir = join(project_path, "versions", version_subfolder)
     makedirs(version_dir, exist_ok=True)
 
@@ -208,8 +208,6 @@ manual_inspections = read_csv(MANUAL_INSPECTIONS_URL)
 versions_per_project = {}
 misuses_per_version = {}
 
-stub_version_index = 0
-
 for report in get_accepted_reports(reports):
     row_number, specification, misuse, pull_request_url, status = report
 
@@ -230,8 +228,7 @@ for report in get_accepted_reports(reports):
     else:
         manual_inspection = get_manual_inspection(misuse, manual_inspections)
         if manual_inspection:
-            version = "TODO_v{}".format(stub_version_index)
-            stub_version_index += 1
+            version = "{}^1".format(pull_request["head"]["sha"])
             project = get_project_name(manual_inspection[2])
         else:
             print("Could not find matching subject or manual inspection for {}".format(misuse))
