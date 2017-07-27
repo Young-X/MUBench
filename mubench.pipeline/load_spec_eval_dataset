@@ -282,6 +282,6 @@ for project, versions in versions_per_project.items():
         for misuse in misuses:
             dataset.add("{}.{}".format(project, misuse))
 
-add_dataset(list(dataset), DATASETS_FILE)
+add_dataset(sorted(list(dataset)), DATASETS_FILE)
 
 print("Generated {} misuses from {} pull requests.".format(len(dataset), len(accepted_reports)))
