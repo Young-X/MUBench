@@ -137,13 +137,19 @@ def create_misuse(project_path, misuse_id, pull_request, specification, location
     misuse_dir = join(project_path, "misuses", misuse_id)
     makedirs(misuse_dir, exist_ok=True)
 
+    head_url = pull_request["head"]["repo"]["html_url"]
+    fix_revision = pull_request["head"]["sha"]
     content = {
             "api": __get_api(specification),
             "characteristics": ["TODO"],
             "crash": "TODO",
             "description": pull_request["body"],
             "location": {"file": location_file or "TODO", "method": "TODO"},
-            "internal": "false",
+            "fix": {
+                "commit": "{}/commit/{}".format(head_url, fix_revision), 
+                "revision": fix_revision
+                },
+            "internal": False,
             "report": pull_request["html_url"],
             "source": {"name": "Owolabi's Dataset ASE'16", "url": "fsl.cs.illinois.edu/spec-eval/"}
             }
