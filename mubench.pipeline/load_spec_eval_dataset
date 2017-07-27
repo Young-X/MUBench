@@ -29,7 +29,7 @@ def get_accepted_reports(reports):
         if status in ['Accepted']:
             accepted_reports.append(report)
         elif status in ['Rejected', 'Pending ', 'Already fixed']:
-            pass
+            continue
         else:
             raise ValueError("Unknown status: {}".format(status))
 
@@ -212,7 +212,8 @@ manual_inspections = read_csv(MANUAL_INSPECTIONS_URL)
 versions_per_project = {}
 misuses_per_version = {}
 
-for report in get_accepted_reports(reports):
+accepted_reports = get_accepted_reports(reports)
+for report in accepted_reports:
     row_number, specification, misuse, pull_request_url, status = report
 
     if not pull_request_url.startswith("https://github.com/"):
@@ -277,4 +278,4 @@ for project, versions in versions_per_project.items():
 
 add_dataset(list(dataset), DATASETS_FILE)
 
-print("Generated {} misuses.".format(len(dataset)))
+print("Generated {} misuses from {} pull requests.".format(len(dataset), len(accepted_reports)))
