@@ -1,0 +1,21 @@
+api:
+- java.util.Map
+characteristics:
+- TODO
+crash: TODO
+description: |
+  In XMLReporter.java:158, the synchronized map, `results`,
+  is iterated over in an unsynchronized manner, but according to the [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedMap%28java.util.Map%29),
+  this is not thread-safe and can lead to non-deterministic behavior.
+  This pull request adds a fix by synchronizing the iteration on results.
+fix:
+  commit: https://github.com/emopers/testng/commit/677302cb8b5a2507df97c5822eef3a03ebc4e23a
+  revision: 677302cb8b5a2507df97c5822eef3a03ebc4e23a
+internal: false
+location:
+  file: org/testng/reporters/XMLReporter.java
+  method: TODO
+report: https://github.com/cbeust/testng/pull/930
+source:
+  name: Owolabi's Dataset ASE'16
+  url: fsl.cs.illinois.edu/spec-eval/
