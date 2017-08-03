@@ -17,7 +17,7 @@ DATASETS_FILE = join(DATA_PATH, 'datasets.yml')
 
 def read_csv(url):
     stream = urlopen(url)
-    reader = csv.reader(TextIOWrapper(stream))
+    reader = csv.reader(TextIOWrapper(stream, encoding='utf-8'), delimiter=',')
     return list(reader)
 
 def get_accepted_reports(reports):
@@ -52,8 +52,13 @@ def get_evaluated_subject(report_url, subjects):
 
 
 def get_manual_inspection(violation_id, manual_inspections):
+    # skip 30 because of collision between M_30 and A_30
+    if violation_id == "30":
+        return None
+
     for manual_inspection in manual_inspections:
         # example: manual_inspection[1] = A_192
+
         manual_inspection_violation_id = manual_inspection[1].split('_', 1)[1]
         if violation_id == manual_inspection_violation_id:
             return manual_inspection
@@ -191,7 +196,7 @@ def create_version(project_path, version_sha, misuses):
                 "commands": ["mvn compile"],
                 "src": "src/main/java/"
                 },
-            "misuses": misuses,
+            "misuses": sorted(misuses),
             "revision": version_sha
             }
 
@@ -259,9 +264,9 @@ for report in accepted_reports:
 
     if version not in misuses_per_version:
         misuses_per_version[version] = set()
-
     if project not in versions_per_project:
         versions_per_project[project] = set()
+
     versions_per_project[project].add(version)
 
     repository = pull_request["base"]["repo"]
@@ -275,13 +280,28 @@ dataset = set()
 for project, versions in versions_per_project.items():
     for version in versions:
         project_path = join(DATA_PATH, project)
-        misuses = misuses_per_version[version]
+        misuses = list(misuses_per_version[version])
 
-        create_version(project_path, version, list(misuses)) 
+        create_version(project_path, version, misuses) 
 
-        for misuse in misuses:
-            dataset.add("{}.{}".format(project, misuse))
+        dataset.add("{}.{}".format(project, version[:7]))
 
 add_dataset(sorted(list(dataset)), DATASETS_FILE)
 
-print("Generated {} misuses from {} pull requests.".format(len(dataset), len(accepted_reports)))
+number_of_projects = 0
+number_of_versions = 0
+number_of_misuses = 0
+for project, versions in versions_per_project.items():
+    number_of_projects += 1
+    for version in versions:
+        number_of_versions += 1
+
+for version, misuses in misuses_per_version.items():
+    for misuse in misuses:
+        number_of_misuses += 1
+
+print("{}/{} Reports were accepted".format(len(accepted_reports), len(reports)))
+print("{} Subjects".format(len(subjects)))
+print("{} Manual Inspections".format(len(manual_inspections)))
+print("Dataset contains {} misuses, {} versions, and {} projects.".format(
+    number_of_misuses, number_of_versions, number_of_projects))
