@@ -223,9 +223,16 @@ manual_inspections = read_csv(MANUAL_INSPECTIONS_URL)
 versions_per_project = {}
 misuses_per_version = {}
 
+visited_pull_requests = set()
+
 accepted_reports = get_accepted_reports(reports)
 for report in accepted_reports:
     row_number, specification, misuse, pull_request_url, status = report
+    
+    if pull_request_url in visited_pull_requests:
+        print("Skipping {}: duplicate pull request URL".format(misuse))
+        continue
+    visited_pull_requests.add(pull_request_url)
 
     if not pull_request_url.startswith("https://github.com/"):
         print("Unknown repository type of {}".format(pull_request_url))
