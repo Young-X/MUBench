@@ -16,7 +16,7 @@ fix:
 internal: false
 location:
   file: org/testng/reporters/JUnitXMLReporter.java
-  method: TODO
+  method: generateReport(ITestContext)
 report: https://github.com/cbeust/testng/pull/830
 source:
   name: Owolabi's Dataset ASE'16

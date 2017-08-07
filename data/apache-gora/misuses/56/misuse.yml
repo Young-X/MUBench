@@ -13,7 +13,7 @@ fix:
 internal: false
 location:
   file: org/apache/gora/util/TestWritableUtils.java
-  method: TODO
+  method: testWritesReads()
 report: https://github.com/apache/gora/pull/55
 source:
   name: Owolabi's Dataset ASE'16

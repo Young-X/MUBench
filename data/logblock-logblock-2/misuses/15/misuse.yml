@@ -13,7 +13,7 @@ fix:
 internal: false
 location:
   file: org/logblock/entry/BlobTest.java
-  method: TODO
+  method: paintingTest()
 report: https://github.com/LogBlock/LogBlock-2/pull/9
 source:
   name: Owolabi's Dataset ASE'16

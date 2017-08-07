@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/eclipse/paho/client/mqttv3/internal/wire/MqttSubscribe.java
-  method: TODO
+  method: getMessageInfo()
 report: https://github.com/eclipse/paho.mqtt.java/pull/3
 source:
   name: Owolabi's Dataset ASE'16

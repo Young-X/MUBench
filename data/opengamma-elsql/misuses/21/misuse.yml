@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/testng/reporters/jq/Model.java
-  method: TODO
+  method: init()
 report: https://github.com/cbeust/testng/pull/929
 source:
   name: Owolabi's Dataset ASE'16

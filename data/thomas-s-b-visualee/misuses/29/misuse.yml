@@ -13,7 +13,7 @@ fix:
 internal: false
 location:
   file: de/strullerbaumann/visualee/examiner/Examiner.java
-  method: TODO
+  method: findAndSetPackage(JavaSource)
 report: https://github.com/Thomas-S-B/visualee/pull/3
 source:
   name: Owolabi's Dataset ASE'16

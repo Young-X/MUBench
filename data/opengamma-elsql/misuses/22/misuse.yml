@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/testng/reporters/XMLReporter.java
-  method: TODO
+  method: getSuiteAttributes(ISuite)
 report: https://github.com/cbeust/testng/pull/930
 source:
   name: Owolabi's Dataset ASE'16

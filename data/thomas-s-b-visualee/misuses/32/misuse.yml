@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: de/strullerbaumann/visualee/examiner/Examiner.java
-  method: TODO
+  method: scanAfterClosedParenthesis(String, Scanner)
 report: https://github.com/Thomas-S-B/visualee/pull/4
 source:
   name: Owolabi's Dataset ASE'16

@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/asteriskjava/manager/event/AsyncAgiEvent.java
-  method: TODO
+  method: getEnv()
 report: https://github.com/asterisk-java/asterisk-java/pull/85
 source:
   name: Owolabi's Dataset ASE'16

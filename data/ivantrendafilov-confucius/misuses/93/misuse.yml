@@ -15,7 +15,7 @@ fix:
 internal: false
 location:
   file: org/b3log/latke/ioc/LatkeBeanManagerImpl.java
-  method: TODO
+  method: getBooleanValue(String, boolean)
 report: https://github.com/IvanTrendafilov/Confucius/pull/6
 source:
   name: Owolabi's Dataset ASE'16

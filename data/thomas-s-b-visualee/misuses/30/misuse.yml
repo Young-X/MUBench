@@ -13,8 +13,8 @@ fix:
   revision: eff52eea696912fc0b106bfd5b78a0683d3dd3c0
 internal: false
 location:
-  file: TODO
-  method: TODO
+  file: de/strullerbaumann/visualee/examiner/Examiner.java 
+  method: isAJavaToken(String)
 report: https://github.com/Thomas-S-B/visualee/pull/2
 source:
   name: Owolabi's Dataset ASE'16

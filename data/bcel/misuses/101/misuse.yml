@@ -12,7 +12,7 @@ fix:
 internal: false
 location:
   file: org/apache/bcel/generic/InstructionList.java
-  method: TODO
+  method: setPositions(boolean)
 report: https://github.com/apache/commons-bcel/pull/3
 source:
   name: Owolabi's Dataset ASE'16

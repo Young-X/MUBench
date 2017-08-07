@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/testng/reporters/SuiteHTMLReporter.java
-  method: TODO
+  method: compare(Object, Object)
 report: https://github.com/cbeust/testng/pull/931
 source:
   name: Owolabi's Dataset ASE'16
