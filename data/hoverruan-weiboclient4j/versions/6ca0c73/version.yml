@@ -1,0 +1,8 @@
+build:
+  classes: target/classes/
+  commands:
+  - mvn compile
+  src: src/main/java/
+misuses:
+- '128'
+revision: 6ca0c73f77f10d8ec1fed2c768c719dcf9ea7fc5
