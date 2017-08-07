@@ -3,11 +3,10 @@ api:
 characteristics:
 - TODO
 crash: TODO
-description: "`RtcpReceivedEvent.java` calls `java.lang.long.parseLong` without first\
-  \ checking whether the argument parses. This lead to an uncaught `NumberFormatException`:\
-  \ [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).\n\
-  \nThis pull request adds a check with a  more helpful exception message. Kindly\
-  \ let me know if you want me to change the message. \n"
+description: |
+  `RtcpReceivedEvent.java` calls `java.lang.long.parseLong` without first checking whether the argument parses. This lead to an uncaught `NumberFormatException`:
+  [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).
+  This pull request adds a check with a more helpful exception message. Kindly let me know if you want me to change the message.
 fix:
   commit: https://github.com/emopers/asterisk-java/commit/41461b41309bf9f027a46f178cb777a1a94b8c3f
   revision: 41461b41309bf9f027a46f178cb777a1a94b8c3f
