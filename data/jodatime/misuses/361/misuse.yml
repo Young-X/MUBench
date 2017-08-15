@@ -3,12 +3,13 @@ api:
 characteristics:
 - TODO
 crash: TODO
-description: "The Rule constructor in org.joda.time.tz.ZoneInfoCompiler.java does\
-  \ not\ncheck the number of elements in the StringTokenier obtained from parsing\n\
-  the timezone file.  There is an assumption that the input TimeZone file\nwill always\
-  \ be valid, leading to runtime exceptions with no good error\nmessage when the file\
-  \ is invalid. This pull request adds a potential fix\nand a test for this issue.\
-  \ \n"
+description: |
+  The Rule constructor in org.joda.time.tz.ZoneInfoCompiler.java does not
+  check the number of elements in the StringTokenier obtained from parsing
+  the timezone file.  There is an assumption that the input TimeZone file
+  will always be valid, leading to runtime exceptions with no good error
+  message when the file is invalid. This pull request adds a potential fix
+  and a test for this issue.
 fix:
   commit: https://github.com/emopers/joda-time/commit/f49c671d9926eb677490a76cc8317970e5be433c
   revision: f49c671d9926eb677490a76cc8317970e5be433c
