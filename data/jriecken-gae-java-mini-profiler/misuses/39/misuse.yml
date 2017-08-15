@@ -15,7 +15,7 @@ fix:
   revision: 30be31776655f73487a59d443b30c7f7408f251b
 internal: false
 location:
-  file: de/strullerbaumann/visualee/examiner/ExaminerTest.java
+  file: com/google/appengine/tools/appstats/MiniProfilerAppstats.java
   method: getAppstatsDataFor(String, Integer)
 report: https://github.com/jriecken/gae-java-mini-profiler/pull/11
 source:
