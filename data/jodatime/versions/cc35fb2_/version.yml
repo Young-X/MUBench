@@ -2,8 +2,8 @@ build:
   classes: target/classes/
   commands:
   - mvn compile
-  src: src/test/java/
+  src: src/main/java/
 misuses:
-- '269'
-- '339'
+- '361'
+- '362'
 revision: cc35fb2e6e106031fdbf1d1c2be5da6a9eb67c38
