@@ -25,7 +25,7 @@ fix:
   revision: 18b596ad7116f55d8c2b25e9aa4954d3b51507fb
 internal: false
 location:
-  file: de/odysseus/staxon/event/SimpleXMLEventReaderTest.java
+  file: weiboclient4j/params/CoreParameters.java
   method: cid(long)
 report: https://github.com/hoverruan/weiboclient4j/pull/15
 source:

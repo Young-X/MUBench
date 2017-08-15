@@ -14,7 +14,7 @@ fix:
   revision: 2fefd5eb6d77ab1b83efe3bf50171aabc7128460
 internal: false
 location:
-  file: org/b3log/latke/ioc/LatkeBeanManagerImpl.java
+  file: org/trendafilov/confucius/core/AbstractConfiguration.java
   method: getBooleanValue(String, boolean)
 report: https://github.com/IvanTrendafilov/Confucius/pull/6
 source:
