@@ -2,7 +2,7 @@ build:
   classes: target/classes/
   commands:
   - mvn compile
-  src: src/main/java/
+  src: LogBlock-2-API/src/test/java/
 misuses:
 - '15'
 revision: 40548aad551c3ec59a72433937afeaa40a052cb4
