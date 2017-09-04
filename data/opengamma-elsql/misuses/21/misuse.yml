@@ -1,8 +1,8 @@
 api:
 - java.util.Map
 characteristics:
-- TODO
-crash: TODO
+- missing/condition/synchronization
+crash: false
 description: |
   In Model.java:49, the synchronized map returned by suite.getResults()
   is iterated over in an unsynchronized manner, but according to the [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedMap%28java.util.Map%29),

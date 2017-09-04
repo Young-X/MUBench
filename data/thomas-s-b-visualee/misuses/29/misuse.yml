@@ -1,8 +1,8 @@
 api:
 - java.util.Iterator
 characteristics:
-- TODO
-crash: TODO
+- missing/condition/value_or_state
+crash: true
 description: |
   In Examiner.java:259, 'scanner.next()' is called on 'java.util.Scanner scanner' without checking
   if there are more elements. Because the scanner is built from the JavaSource parameter

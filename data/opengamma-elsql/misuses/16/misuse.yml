@@ -1,8 +1,8 @@
 api:
 - java.util.List
 characteristics:
-- TODO
-crash: TODO
+- missing/condition/synchronization
+crash: false
 description: |
   In ChronologicalPanel.java:44, the synchronized list, invokedMethods,
   is iterated over in an unsynchronized manner, but according to the [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#synchronizedList%28java.util.List%29),
