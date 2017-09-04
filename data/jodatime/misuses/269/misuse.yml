@@ -1,8 +1,8 @@
 api:
 - java.io.ByteArrayOutputStream
 characteristics:
-- TODO
-crash: TODO
+- misplaced/call
+crash: false
 description: |
   When an ObjectOutputStream instance wraps an underlying ByteArrayOutputStream instance,
   it is recommended to flush or close the ObjectOutputStream before invoking the underlying instances's toByteArray().

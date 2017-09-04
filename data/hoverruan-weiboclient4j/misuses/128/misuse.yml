@@ -1,8 +1,8 @@
 api:
 - java.lang.Long
 characteristics:
-- TODO
-crash: TODO
+- missing/exception_handling
+crash: true
 description: |
   `CoreParameters#cid(String)` calls `java.lang.long.parseLong` without first checking whether the argument parses. This lead to an uncaught `NumberFormatException`: [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).
 

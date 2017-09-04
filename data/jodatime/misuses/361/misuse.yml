@@ -1,11 +1,11 @@
 api:
 - java.util.Enumeration
 characteristics:
-- TODO
-crash: TODO
+- missing/condition/value_or_state
+crash: false
 description: |
   The Rule constructor in org.joda.time.tz.ZoneInfoCompiler.java does not
-  check the number of elements in the StringTokenier obtained from parsing
+  check the number of elements in the StringTokenizer obtained from parsing
   the timezone file.  There is an assumption that the input TimeZone file
   will always be valid, leading to runtime exceptions with no good error
   message when the file is invalid. This pull request adds a potential fix

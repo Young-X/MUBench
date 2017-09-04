@@ -1,8 +1,8 @@
 api:
 - java.util.List
 characteristics:
-- TODO
-crash: TODO
+- missing/condition/synchronization
+crash: false
 description: |
   In lines 177 and 180 of JUnitXMLReporter, synchronized collections m_configIssues and m_allTests
   are both iterated in an unsynchronized manner, but according to Oracle Java 7 API specification
