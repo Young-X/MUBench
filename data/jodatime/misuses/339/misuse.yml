@@ -12,8 +12,8 @@ fix:
   revision: 60be421469dd85893978bfc645b41e94c63ba1b1
 internal: false
 location:
-  file: org/joda/time/tz/TestBuilder.java
-  method: TODO
+  file: org/joda/time/tz/DateTimeZoneBuilder.java
+  method: writeTo(String, OutputStream)
 report: https://github.com/JodaOrg/joda-time/pull/343
 source:
   name: Owolabi's Dataset ASE'16

@@ -16,7 +16,7 @@ fix:
 internal: false
 location:
   file: org/joda/time/tz/ZoneInfoCompiler.java
-  method: TODO
+  method: Rule(StringTokenizer)
 report: https://github.com/JodaOrg/joda-time/pull/319
 source:
   name: Owolabi's Dataset ASE'16
