@@ -14,7 +14,7 @@ fix:
 internal: false
 location:
   file: org/testng/reporters/SuiteHTMLReporter.java
-  method: compare(IInvokedMethod, IInvokedMethod)
+  method: generateMethodsChronologically(XmlSuite, ISuite, String, boolean)
 report: https://github.com/cbeust/testng/pull/931
 source:
   name: Owolabi's Dataset ASE'16
