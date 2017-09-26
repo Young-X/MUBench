@@ -15,7 +15,7 @@ fix:
 internal: false
 location:
   file: org/trendafilov/confucius/core/AbstractConfiguration.java
-  method: getByteValue(String)
+  method: getLongValue(String, long)
 report: https://github.com/IvanTrendafilov/Confucius/pull/6
 source:
   name: Owolabi's Dataset ASE'16
