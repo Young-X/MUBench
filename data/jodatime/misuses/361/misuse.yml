@@ -1,5 +1,5 @@
 api:
-- java.util.Enumeration
+- java.util.StringTokenizer
 characteristics:
 - missing/condition/value_or_state
 crash: false

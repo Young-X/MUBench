@@ -1,5 +1,6 @@
 api:
 - java.io.ByteArrayOutputStream
+- java.io.DataOutputStream
 characteristics:
 - missing/call
 crash: false
@@ -9,7 +10,7 @@ description: |
   Although in these cases this is not strictly necessary because the
   DataOutputStream's close and flush method has no effects. However, it is a good practice to call
   flush/close explicitly as mentioned for example [here](http://stackoverflow.com/questions/2984538/how-to-use-bytearrayoutputstream-and-dataoutputstream-simultaneously-java).
-  This pull request adds close and flush methods at appropriate places.
+  This pull request adds a call to close.
 fix:
   commit: https://github.com/emopers/ntru/commit/4fd7cb8b4bb97dbf7be98e2fa55f36f5028807d2
   revision: 4fd7cb8b4bb97dbf7be98e2fa55f36f5028807d2

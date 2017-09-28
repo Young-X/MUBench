@@ -4,6 +4,6 @@ build:
   - mvn compile
   src: src/main/java/
 misuses:
-- '361'
-- '362'
-revision: cc35fb2e6e106031fdbf1d1c2be5da6a9eb67c38
+- '17'
+- '18'
+revision: eaf38e591a4418dbcee671f7d16f5836931a6ca5^1

@@ -1,17 +1,13 @@
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.IOException;
 
 class FlushStreamBeforeGetBytes {
-  byte[] pattern(Object o) {
+  byte[] pattern(Object o) throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    DataOutputStream dos = new DataOutputStream(baos);
-    try {
-      dos.writeObject(o);
-      dos.close();
-      return baos.toByteArray();
-    } catch (IOException e) {
-      return new byte[0];
-    }
+    ObjectOutputStream dos = new ObjectOutputStream(baos);
+    dos.writeObject(o);
+    dos.close();
+    return baos.toByteArray();
   }
 }

@@ -1,5 +1,6 @@
 api:
 - java.io.ByteArrayOutputStream
+- java.io.ObjectOutputStream
 characteristics:
 - misplaced/call
 crash: false
@@ -10,10 +11,7 @@ description: |
   writeObject method is invoked right before toByteArray, and writeObject
   internally calls flush/drain.  However, it is a good practice to call
   flush/close explicitly as mentioned for example [here](http://stackoverflow.com/questions/2984538/how-to-use-bytearrayoutputstream-and-dataoutputstream-simultaneously-java).
-  This pull request flips the order of close and toytBeArray methods.
-  While there are seemingly many changes, they're all just copies of
-  the same change.  Please let me know if you want me to extract the
-  common code into one helper method.
+  This pull request flips the order of close and toByteArray methods.
 fix:
   commit: https://github.com/emopers/joda-time/commit/0e82517a7f4a2e659143ce84ff1f4ea706e9a88c
   revision: 0e82517a7f4a2e659143ce84ff1f4ea706e9a88c

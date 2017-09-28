@@ -1,12 +1,10 @@
-import weiboclient4j.params.Cid;
-
 class HandleNotANumber {
-  Cid cid(String value) {
+  long pattern(String value) {
     try {
-      // The constructor invokes Long.parseLong() on the string parameter.
-      return new Cid(value);
+      return Long.parseLong(value);
     } catch (NumberFormatException e) {
-      throw new NumberFormatException(String.format("Cid value [%s] is not a parseable Long", value));
+      // throw more expressive error
+      throw new NumberFormatException(String.format("Value [%s] is not a parseable Long", value));
     }
   }
 }

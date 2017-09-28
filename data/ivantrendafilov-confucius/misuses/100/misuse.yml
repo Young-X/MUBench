@@ -1,14 +1,13 @@
 api:
-- java.lang.Byte
+- java.lang.Short
 characteristics:
 - missing/exception_handling
 crash: true
 description: |
-  `AbstractConfiguration.java` calls `java.lang.long.parseLong` without first checking whether the argument parses. This lead to an uncaught `NumberFormatException`: [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).
+  `AbstractConfiguration.java` calls `java.lang.Short.parseShort` without first checking whether the argument parses.
+  This lead to an uncaught `NumberFormatException`: [Oracle Java 7 API specification](http://docs.oracle.com/javase/7/docs/api/java/lang/Long.html#parseLong%28java.lang.String,%20int%29).
 
   This pull request adds a check with a  more helpful exception message and tests for this issue.
-
-  This needs to be done for `java.lang.Short.parseShort` and `java.lang.Byte.parseByte` also. Kindly let me know if you want me to do same for them.
 fix:
   commit: https://github.com/emopers/Confucius/commit/2fefd5eb6d77ab1b83efe3bf50171aabc7128460
   revision: 2fefd5eb6d77ab1b83efe3bf50171aabc7128460

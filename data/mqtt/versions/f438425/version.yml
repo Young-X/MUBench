@@ -1,5 +1,5 @@
 build:
-  classes: target/classes/
+  classes: org.eclipse.paho.client.mqttv3/target/classes/
   commands:
   - mvn compile
   src: org.eclipse.paho.client.mqttv3/src/main/java/
