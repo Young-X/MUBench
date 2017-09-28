@@ -1,5 +1,5 @@
 api:
-- java.io.ByteArrayOutputStream
+- java.io.DataOutputStream
 characteristics:
 - missing/call
 crash: false
@@ -8,7 +8,7 @@ description: |
   it is recommended to flush or close the DataOutputStream before invoking the underlying instances's toByteArray(). Also, it is a good practice to call flush/close explicitly as mentioned for example [here](http://stackoverflow.com/questions/2984538/how-to-use-bytearrayoutputstream-and-dataoutputstream-simultaneously-java).
   This pull request add a flush method before toByteArray.
 fix:
-  commit: https://github.com/emopers/gora/commit/4f98503c014c359b6ab018f43920d454b0344160
+  commit: https://github.com/apache/gora/commit/4f98503c014c359b6ab018f43920d454b0344160
   revision: 4f98503c014c359b6ab018f43920d454b0344160
 internal: false
 location:

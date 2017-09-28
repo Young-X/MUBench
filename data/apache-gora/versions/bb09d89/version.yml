@@ -1,8 +1,8 @@
 build:
-  classes: target/test-classes/
+  classes: gora-accumulo/target/test-classes/
   commands:
   - mvn compile
-  src: gora-core/src/test/java/
+  src: gora-accumulo/src/test/java/
 misuses:
 - '56_1'
 - '56_2'

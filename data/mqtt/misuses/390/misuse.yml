@@ -1,5 +1,4 @@
 api:
-- java.io.ByteArrayOutputStream
 - java.io.DataOutputStream
 characteristics:
 - missing/call
