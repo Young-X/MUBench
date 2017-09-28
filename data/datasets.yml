@@ -83,7 +83,6 @@ owolabi-ase16:
 - apache-gora.bb09d89
 - asterisk-java.304421c
 - asterisk-java.41461b4
-- b3log-b3log-latke.097cc76
 - bcel.24014e5
 - hoverruan-weiboclient4j.6ca0c73
 - ivantrendafilov-confucius.2c30287
@@ -92,9 +91,9 @@ owolabi-ase16:
 - jriecken-gae-java-mini-profiler.80f3a59
 - logblock-logblock-2.40548aa
 - mqtt.f438425
-- opengamma-elsql.677302c
-- opengamma-elsql.92e7da1
-- opengamma-elsql.cd80791
-- opengamma-elsql.d6dfce3
 - tbuktu-ntru.8126929
+- testng.677302c
+- testng.92e7da1
+- testng.cd80791
+- testng.d6dfce3
 - thomas-s-b-visualee.410a80f
