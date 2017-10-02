@@ -1,5 +1,5 @@
 api:
-- java.util.Collections.synchonizedList
+- java.util.Collections.synchronizedList
 characteristics:
 - missing/condition/synchronization
 crash: false

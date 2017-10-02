@@ -1,15 +1,16 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
-import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.internal.Utils;
 
-class IterateSynchonized {
-  private List<ITestContext> syncL = Collections.synchronizedList(new ArrayList<ITestContext>());
+class IterateSynchonized18 {
+  private List<ITestResult> syncL = Collections.synchronizedList(new ArrayList<ITestResult>());
   
   void pattern() {
     synchronized(syncL) {
-      for (ITestContext tr : syncL) {
+      for (ITestResult tr : syncL) {
         long elapsedTimeMillis= tr.getEndMillis() - tr.getStartMillis();
         String name= tr.getMethod().isTest() ? tr.getName() : Utils.detailedMethodName(tr.getMethod(), false);
       }

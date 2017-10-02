@@ -4,13 +4,13 @@ import org.testng.ITestContext;
 
 import java.util.Map;
 
-class IterateSynchonized {  
+class SyncIterateResults22 {  
   ITestContext pattern(ISuite suite) {
     // This invokation (may?) return a synchronized map.
     Map<String, ISuiteResult> results = suite.getResults();
     synchronized(results) {
-      for (Map.Entry<String, ISuiteResult> result : results.entrySet()) {
-        ITestContext testContext = result.getValue().getTestContext();
+      for (ISuiteResult sr : results.values()) {
+        ITestContext context = sr.getTestContext();
         return context; // do something with context
       }
     }

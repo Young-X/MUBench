@@ -1,4 +1,5 @@
 import org.logblock.entry.blob.PaintingBlob;
+import org.logblock.entry.BlobEntry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

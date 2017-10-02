@@ -2,11 +2,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-class FlushStreamBeforeGetBytes {
+class FlushStreamBeforeGetBytes389 {
   byte[] pattern(byte b) throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
-    dos.write(b);
+    dos.writeByte(b);
     dos.flush();
     return baos.toByteArray();
   }

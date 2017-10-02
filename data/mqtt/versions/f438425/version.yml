@@ -1,5 +1,5 @@
 build:
-  classes: org.eclipse.paho.client.mqttv3$mvn.default.classes
+  classes: org.eclipse.paho.client.mqttv3/$mvn.default.classes
   commands:
   - mvn compile
   src: org.eclipse.paho.client.mqttv3/src/main/java/

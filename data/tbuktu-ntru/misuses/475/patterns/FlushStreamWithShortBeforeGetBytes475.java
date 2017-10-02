@@ -2,7 +2,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-class FlushStreamWithShortBeforeGetBytes {
+class FlushStreamWithShortBeforeGetBytes475 {
   byte[] pattern(short s) {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);

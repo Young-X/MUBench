@@ -2,7 +2,7 @@ import de.strullerbaumann.visualee.examiner.Examiner;
 import de.strullerbaumann.visualee.source.entity.JavaSource;
 import java.util.Scanner;
 
-class ScannerHasNext extends Examiner {
+abstract class JumpOverJavaToken extends Examiner {
   @Override
   protected static String jumpOverJavaToken(String token, Scanner scanner) {
     String nextToken = token;

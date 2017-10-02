@@ -4,7 +4,7 @@ import org.testng.ITestNGMethod;
 
 import java.util.Collection;
 
-class IterateSynchonized {  
+class SyncIterateInvokedMethods {  
   ITestNGMethod pattern(ISuite suite) {
     // This invokation (may?) return a synchronized collection.
     Collection<IInvokedMethod> invokedMethods = suite.getAllInvokedMethods();

@@ -1,7 +1,7 @@
 import de.strullerbaumann.visualee.source.entity.JavaSource;
 import java.util.Scanner;
 
-class ScannerHasNext {
+class SetPackagePath {
   void pattern(Scanner scanner, JavaSource javaSource) {
     while (scanner.hasNext()) {
       String token = scanner.next();

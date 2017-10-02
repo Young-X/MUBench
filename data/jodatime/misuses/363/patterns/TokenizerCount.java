@@ -7,4 +7,5 @@ class TokenizerCount {
       throw new IllegalArgumentException("too few tokens");
     }
     return st.nextToken();
+  }
 }
