@@ -1,5 +1,5 @@
 build:
-  classes: LogBlock-2-API/target/test-classes/
+  classes: LogBlock-2-API/$mvn.default.test-classes
   commands:
   - mvn compile
   src: LogBlock-2-API/src/test/java/

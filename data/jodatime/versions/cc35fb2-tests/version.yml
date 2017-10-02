@@ -1,5 +1,5 @@
 build:
-  classes: target/test-classes/
+  classes: $mvn.default.test-classes
   commands:
   - mvn compile
   src: src/test/java/

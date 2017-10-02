@@ -1,5 +1,5 @@
 build:
-  classes: gora-accumulo/target/test-classes/
+  classes: gora-accumulo/$mvn.default.test-classes
   commands:
   - mvn compile
   src: gora-accumulo/src/test/java/
