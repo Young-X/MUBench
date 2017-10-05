@@ -2,16 +2,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-class FlushStreamWithShortBeforeGetBytes476 {
-  byte[] pattern(short s) {
+class FlushStreamWithByteObjectBeforeGetBytes {
+  byte[] pattern(byte b) throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
-    try {
-      dos.writeShort(s);
-      dos.flush();
-    } catch (IOException e) {
-      return new byte[0];
-    }
+    dos.writeByte(b);
+    dos.flush();
     return baos.toByteArray();
   }
 }

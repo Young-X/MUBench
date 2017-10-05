@@ -5,7 +5,7 @@ import java.util.Collections;
 import org.testng.ITestResult;
 import org.testng.internal.Utils;
 
-class IterateSynchonized17 {
+class IterateSynchronized {
   private List<ITestResult> syncL = Collections.synchronizedList(new ArrayList<ITestResult>());
   
   void pattern() {

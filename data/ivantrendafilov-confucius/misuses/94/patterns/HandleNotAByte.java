@@ -1,5 +1,5 @@
 
-class HandleNotANumber {
+class HandleNotAByte {
   long pattern(String s) {
     try {
         return Byte.parseByte(s);

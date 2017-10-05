@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 class FlushStreamBeforeGetBytes {
-  byte[] pattern(OutputStream out) throws IOException {
-    DataOutput dout;
+  void pattern(OutputStream out) throws IOException {
     if (out instanceof DataOutput) {
       DataOutput dout = (DataOutput) out;
       dout.writeByte('F');
     } else {
-      dout = new DataOutputStream(out);
+      DataOutputStream dout = new DataOutputStream(out);
       dout.writeByte('F');
       dout.flush();
     }

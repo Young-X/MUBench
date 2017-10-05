@@ -16,7 +16,7 @@ fix:
   revision: 0e82517a7f4a2e659143ce84ff1f4ea706e9a88c
 internal: false
 location:
-  file: TestLocalDate_Basics.java
+  file: org/joda/time/TestLocalDate_Basics.java
   method: testSerialization()
 report: https://github.com/JodaOrg/joda-time/pull/339
 source:

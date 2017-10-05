@@ -1,5 +1,5 @@
 
-class HandleNotANumber {
+class HandleNotALong {
   long pattern(String s) {
     try {
         return Long.parseLong(s);

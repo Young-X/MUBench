@@ -1,7 +1,7 @@
 build:
   classes: $mvn.default.test-classes
   commands:
-  - mvn compile
+  - mvn test-compile
   src: src/test/java/
 misuses:
 - '269'

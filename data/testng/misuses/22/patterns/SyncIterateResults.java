@@ -4,7 +4,7 @@ import org.testng.ITestContext;
 
 import java.util.Map;
 
-class SyncIterateResults22 {  
+class SyncIterateResults {  
   ITestContext pattern(ISuite suite) {
     // This invokation (may?) return a synchronized map.
     Map<String, ISuiteResult> results = suite.getResults();

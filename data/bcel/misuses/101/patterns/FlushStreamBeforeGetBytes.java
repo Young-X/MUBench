@@ -9,7 +9,7 @@ class FlushStreamBeforeGetBytes {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
     try {
-      i.dump(out);
+      i.dump(dos);
       dos.flush();
     } catch (IOException e) {
       return new byte[0];

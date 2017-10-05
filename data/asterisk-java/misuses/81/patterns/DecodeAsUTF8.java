@@ -9,6 +9,5 @@ class DecodeAsUTF8 {
     } catch (UnsupportedEncodingException e) {
       throw new RuntimeException("This JDK does not support UTF-8 encoding", e);
     }
-    return result;
   }
 }
