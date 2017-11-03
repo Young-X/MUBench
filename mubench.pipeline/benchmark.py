@@ -127,8 +127,9 @@ class Benchmark:
             tasks.append(
                 DatasetCheckTask(get_available_datasets(self.DATASETS_FILE_PATH), self.CHECKOUTS_PATH, self.DATA_PATH))
 
+        initial_parameters = [self.data_entity_lists]
         runner = TaskRunner(tasks)
-        runner.run()
+        runner.run(*initial_parameters)
 
     def __get_experiment(self):
         if self.config.experiment == 1:
