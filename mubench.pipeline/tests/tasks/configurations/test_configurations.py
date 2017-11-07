@@ -8,7 +8,6 @@ from tasks.configurations.configurations import TaskConfiguration, get_task_conf
 class ConfigDummy:
     def __init__(self, mode: str):
         self.task = mode
-        self.publish_task = ""
 
 
 class TestTaskConfigurations:

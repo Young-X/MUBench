@@ -32,7 +32,7 @@ class TaskConfiguration(list):
 
 def get_task_configuration(config) -> TaskConfiguration:
     mode = config.task
-    if config.publish_task:
+    if hasattr(config, 'publish_task'):
         mode += " " + config.publish_task
 
     requested_configurations = [task_config(config) for task_config in
