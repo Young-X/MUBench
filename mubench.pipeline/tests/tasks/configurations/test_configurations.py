@@ -3,7 +3,6 @@ from typing import List
 from nose.tools import assert_is_instance, assert_raises
 
 from tasks.configurations.configurations import TaskConfiguration, get_task_configuration
-from tasks.configurations.mubench_paths import MubenchPaths
 
 
 class ConfigDummy:
@@ -14,14 +13,14 @@ class ConfigDummy:
 
 class TestTaskConfigurations:
     def test_get_configuration(self):
-        configuration = get_task_configuration(MubenchPaths, ConfigDummy("-test-"))
+        configuration = get_task_configuration(ConfigDummy("-test-"))
         assert_is_instance(configuration, TaskConfigurationTestImpl)
 
     def test_duplicate_raises_value_error(self):
-        assert_raises(ValueError, get_task_configuration, MubenchPaths, ConfigDummy("-duplicate-"))
+        assert_raises(ValueError, get_task_configuration, ConfigDummy("-duplicate-"))
 
     def test_no_available_configuration_raises_value_error(self):
-        assert_raises(ValueError, get_task_configuration, MubenchPaths, ConfigDummy("-unavailable-"))
+        assert_raises(ValueError, get_task_configuration, ConfigDummy("-unavailable-"))
 
 
 class TaskConfigurationTestImpl(TaskConfiguration):
@@ -29,12 +28,12 @@ class TaskConfigurationTestImpl(TaskConfiguration):
     def mode() -> str:
         return "-test-"
 
-    def _tasks(self, paths: MubenchPaths, config) -> List:
+    def _tasks(self, config) -> List:
         return []
 
 
 class DuplicateTaskConfiguration(TaskConfiguration):
-    def _tasks(self, paths: MubenchPaths, config) -> List:
+    def _tasks(self, config) -> List:
         return []
 
     @staticmethod
@@ -43,7 +42,7 @@ class DuplicateTaskConfiguration(TaskConfiguration):
 
 
 class DuplicateTaskConfiguration2(TaskConfiguration):
-    def _tasks(self, paths: MubenchPaths, config) -> List:
+    def _tasks(self, config) -> List:
         return []
 
     @staticmethod
